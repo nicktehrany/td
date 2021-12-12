@@ -10,11 +10,12 @@ Arguments parse(int argc, char **argv) {
     Operation op = LIST_ITEMS; // By default if no other flag, list items
     char **item;
     int item_length = 0; // the number of char* in the **item
-    char *itemid;
+    char *itemid = NULL;
     char val;
     int opt;
     bool parsed = false;
     int arg_index = 0;
+    char *listid = NULL;
 
     // Allow long options (e.g. --add instead of -a)
     static struct option long_options[] = {
@@ -54,7 +55,13 @@ Arguments parse(int argc, char **argv) {
                 parsed = true;
                 break;
             case 'l':
-                op = LIST_ITEMS; // TODO list id option
+                op = LIST_ITEMS;
+                if(arg_index + 1 < argc) {
+                    int length = strlen(argv[arg_index + 1]);
+                    listid = malloc(length * sizeof(char *) + 1);
+                    memcpy(listid, argv[arg_index + 1], length);
+                    listid[strlen(argv[arg_index + 1])] = '\0';
+                }
                 parsed = true;
                 break;
             case 'h':
@@ -67,7 +74,6 @@ Arguments parse(int argc, char **argv) {
             break;
     }
 
-
     // If called without flags but with text
     if(!parsed && argc > 1) {
         op = ADD_ITEM;
@@ -76,9 +82,8 @@ Arguments parse(int argc, char **argv) {
             item[item_length] = strdup(argv[i]);
             item[item_length] = (i < argc - 1) ? strcat(item[item_length], " ") : strcat(item[item_length], "\n");
             item_length++;
-            parsed = true;
         }
     }
 
-    return (Arguments){op, item, item_length, itemid};
+    return (Arguments){op, item, item_length, itemid, listid};
 }

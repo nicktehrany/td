@@ -17,6 +17,7 @@ typedef struct Arguments {
      char **item;
      int item_length;
      char *itemid;
+     char *listid;
 } Arguments;
 
 Arguments parse(int argc, char **argv);

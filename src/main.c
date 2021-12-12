@@ -17,6 +17,10 @@ int main(int argc, char *argv[]) {
             finish_item(&args);
             break;
     }
+    // Testing
+    /* printf("Op: %d Len: %d ID: %s ListID: %s\n", args.op, args.item_length, args.itemid, args.listid); */
+    /* for(int i = 0; i < args.item_length; i++) */
+    /*     printf("%s", args.item[i]); */
 
     // TODO cleanup all mallocs
     return 0;
