@@ -7,7 +7,7 @@
 #include <getopt.h>
 
 Arguments parse(int argc, char **argv) {
-    Operation op = list_items; // By default if no other flag, list items
+    Operation op = LIST_ITEMS; // By default if no other flag, list items
     char **item;
     int item_length = 0; // the number of char* in the **item
     char *itemid;
@@ -32,7 +32,7 @@ Arguments parse(int argc, char **argv) {
         switch(opt) 
         { 
             case 'a':
-                op = add_item;
+                op = ADD_ITEM;
                 item = malloc((argc - arg_index - 1) * sizeof(*item));
 
                 // If we get -a flag rest is item text
@@ -44,17 +44,17 @@ Arguments parse(int argc, char **argv) {
                 }
                 break;
             case 'f':
-                op = finish_item;
+                op = FINISH_ITEM;
                 itemid = optarg; 
                 parsed = true;
                 break;
             case 'd':
-                op = delete_item;
+                op = DELETE_ITEM;
                 itemid = optarg; 
                 parsed = true;
                 break;
             case 'l':
-                op = list_items; // TODO also have different lists
+                op = LIST_ITEMS; // TODO list id option
                 parsed = true;
                 break;
             case 'h':
@@ -70,7 +70,7 @@ Arguments parse(int argc, char **argv) {
 
     // If called without flags but with text
     if(!parsed && argc > 1) {
-        op = add_item;
+        op = ADD_ITEM;
         item = malloc((argc - arg_index - 1) * sizeof(*item));
         for (int i = arg_index + 1; i < argc; i++) {
             item[item_length] = strdup(argv[i]);

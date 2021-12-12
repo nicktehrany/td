@@ -14,6 +14,7 @@ set(PROJECT_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 add_executable(${PROJECT_NAME}
     ${PROJECT_SOURCE_DIR}/main.c
     ${PROJECT_SOURCE_DIR}/parser.c
+    ${PROJECT_SOURCE_DIR}/td.c
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC

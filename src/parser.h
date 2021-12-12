@@ -6,10 +6,10 @@
 #define ID_SIZE 2
 
 typedef enum {
-    add_item, // Add item to list
-    delete_item, // Delete an item from list
-    list_items, // Show the list
-    finish_item // Move item to done sublist (not deleting it!)
+    ADD_ITEM, // Add item to list
+    DELETE_ITEM, // Delete an item from list
+    LIST_ITEMS, // Show the list
+    FINISH_ITEM // Move item to done sublist (not deleting it!)
 } Operation;
 
 typedef struct Arguments {
