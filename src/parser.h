@@ -19,7 +19,6 @@ typedef struct Arguments {
      char *itemid;
 } Arguments;
 
-
 Arguments parse(int argc, char **argv);
 
 #endif

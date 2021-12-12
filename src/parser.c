@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h> 
-#include<stdbool.h>
+#include <stdbool.h>
 #include <string.h>
+#include <getopt.h>
 
 Arguments parse(int argc, char **argv) {
     Operation op = list_items; // By default if no other flag, list items
@@ -14,8 +15,18 @@ Arguments parse(int argc, char **argv) {
     int opt;
     bool parsed = false;
     int arg_index = 0;
-      
-    while((opt = getopt(argc, argv, "hla:f:d:")) != -1) 
+
+    // Allow long options (e.g. --add instead of -a)
+    static struct option long_options[] = {
+        {"add", required_argument , NULL, 'a'},
+        {"delete", required_argument , NULL, 'd'},
+        {"list", no_argument , NULL, 'l'},
+        {"finish", no_argument , NULL, 'f'},
+        {"help", no_argument , NULL, 'h'},
+        {NULL, 0, NULL, 0}
+    };
+
+    while((opt = getopt_long(argc, argv, "hla:f:d:", long_options, NULL)) != -1) 
     { 
         arg_index++;
         switch(opt) 
