@@ -17,11 +17,9 @@ int main(int argc, char *argv[]) {
             edit(&args);
             break;
     }
-    // Testing
-    /* printf("Op: %d Len: %d NumItems: %d ID: %s\n", args.op, args.item_length, args.num_items, args.itemid); */
-    /* for(int i = 0; i < args.item_length; i++) */
-    /*     printf("%s", args.item[i]); */
+    
+    for(int i = 0; i < args.item_length; i++)
+        free(args.item[i]);
 
-    // TODO cleanup all mallocs
     return 0;
 }

@@ -16,12 +16,6 @@ Arguments parse(int argc, char **argv) {
     bool parsed = false;
     int arg_index = 0;
 
-    // WHat we need:
-    // no flag for adding, just td something to add
-    // no flag for listing just td
-    // -e for edit (replace or sed like /match/replace)
-    // -f [id*], mark as finished id or multiple ids
-
     static struct option long_options[] = {
         {"finish", required_argument , NULL, 'f'},
         {"edit", required_argument, NULL, 'e'},

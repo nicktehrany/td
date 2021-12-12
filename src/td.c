@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <string.h>
 
-
 int get_next_id() {
     char pwd[FILENAME_MAX];
     getcwd(pwd, FILENAME_MAX);
@@ -22,7 +21,6 @@ int get_next_id() {
 
     return lines;
 }
-
 
 int add(Arguments *args) {
     char pwd[FILENAME_MAX];
@@ -83,7 +81,7 @@ int finish(Arguments *args) {
     char data[MAX_LINES][LINE_SIZE];
     int index = 0;
     while(fgets(data[index], LINE_SIZE, fp)) {
-        if(strncmp(data[index], args->itemid, ID_SIZE))
+        if(strncmp(data[index], args->itemid, strlen(args->itemid)))
             index++;
     }
 
@@ -133,6 +131,6 @@ int edit(Arguments *args) {
     for(int i = 0; i < index; i++)
         fprintf(fp, "%s", data[i]);
     fclose(fp);
-
+    
     return 0;
 }
