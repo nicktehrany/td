@@ -4,21 +4,21 @@ int main(int argc, char *argv[]) {
     Arguments args = parse(argc, argv);
     
     switch (args.op) {
-        case ADD_ITEM:
-            add_item(&args);
+        case ADD:
+            add(&args);
             break;
-        case DELETE_ITEM:
-            delete_item(&args);
+        case FINISH:
+            finish(&args);
             break;
-        case LIST_ITEMS:
-            list_items(&args);
+        case LIST:
+            list(&args);
             break;
-        case FINISH_ITEM:
-            finish_item(&args);
+        case EDIT:
+            edit(&args);
             break;
     }
     // Testing
-    /* printf("Op: %d Len: %d ID: %s ListID: %s\n", args.op, args.item_length, args.itemid, args.listid); */
+    /* printf("Op: %d Len: %d NumItems: %d ID: %s\n", args.op, args.item_length, args.num_items, args.itemid); */
     /* for(int i = 0; i < args.item_length; i++) */
     /*     printf("%s", args.item[i]); */
 

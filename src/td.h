@@ -2,9 +2,12 @@
 #define TD_H
 #include "parser.h"
 
-int add_item(Arguments *args);
-int delete_item(Arguments *args);
-int list_items(Arguments *args);
-int finish_item(Arguments *args);
+#define LINE_SIZE 256
+#define MAX_LINES 100
+
+int add(Arguments *args);
+int list(Arguments *args);
+int finish(Arguments *args);
+int edit(Arguments *args);
 
 #endif
