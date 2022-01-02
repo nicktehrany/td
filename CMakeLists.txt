@@ -4,6 +4,14 @@ set(CMAKE_C_COMPILER /usr/bin/gcc)
 message("Building with CMake version: ${CMAKE_VERSION}")
 message("Compiling with: ${CMAKE_C_COMPILER}")
 
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
 project(td
     LANGUAGES C
     VERSION 1.0.0
@@ -13,6 +21,8 @@ set(PROJECT_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 
 add_executable(${PROJECT_NAME}
     ${PROJECT_SOURCE_DIR}/main.c
+    ${PROJECT_SOURCE_DIR}/parser.c
+    ${PROJECT_SOURCE_DIR}/td.c
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
