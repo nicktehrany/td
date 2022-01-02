@@ -143,7 +143,7 @@ int edit(Arguments *args) {
             }
             strcpy(data[index], new_data);
             free(new_data);
-            modified = false;
+            modified = true;
         }
         index++;
     }
