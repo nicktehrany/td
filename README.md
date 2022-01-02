@@ -75,4 +75,4 @@ $ td | wc -l
 
 ## Bugs and Contributing
 
-For any bugs feel free to put in an Issue or a PR and I'll be happy to merge it. Contributing is also very welcome, just keep in mind this is supposed to be minimal, so features should not be more general and not super niche items. However, even if they are niche feel free to but in an Issue for improvements and we can see if it is something that might actually be useful.
+For any bugs feel free to put in an Issue or a PR and I'll be happy to merge it. Contributing is also very welcome, just keep in mind this is supposed to be minimal, so features should be more general and not super niche items. However, even if they are niche feel free to put in an Issue for improvements and we can see if it is something that might actually be useful.
