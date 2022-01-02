@@ -1,6 +1,7 @@
 #include "td.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <stdbool.h>
 #include <string.h>
 
 int get_next_id() {
@@ -50,6 +51,12 @@ int list(Arguments *args) {
     
     char path[strlen(pwd) + 7];
     strcpy(path, strcat(pwd, "/.todos"));
+    
+    if(access(path, F_OK) != 0) {
+        LOG(INFO, 0, "No todo file in this directory. Create one by adding a todo!");
+        return 0;
+    }
+
     FILE *fp = fopen(path, "r");
     if(fp == NULL) {
         LOG(ERROR, EXIT_FAILURE, "Failed to open .todos file");
@@ -73,16 +80,24 @@ int finish(Arguments *args) {
     
     char path[strlen(pwd) + 7];
     strcpy(path, strcat(pwd, "/.todos"));
+    if(access(path, F_OK) != 0) {
+        LOG(INFO, 0, "No todo file in this directory. Create one by adding a todo!");
+        return 0;
+    }
+
     FILE *fp = fopen(path, "r");
     if(fp == NULL) {
         LOG(ERROR, EXIT_FAILURE, "Failed to open .todos file");
     }
     
     char data[MAX_LINES][LINE_SIZE];
+    char temp[LINE_SIZE];
     int index = 0;
-    while(fgets(data[index], LINE_SIZE, fp)) {
-        if(strncmp(data[index], args->itemid, strlen(args->itemid)))
+    while(fgets(temp, LINE_SIZE, fp)) {
+        if(strncmp(temp, args->itemid, strlen(args->itemid))) {
+            sprintf(data[index], "%i %s", index, strchr(temp, '-'));
             index++;
+        }
     }
 
     fclose(fp);
@@ -100,6 +115,11 @@ int edit(Arguments *args) {
     
     char path[strlen(pwd) + 7];
     strcpy(path, strcat(pwd, "/.todos"));
+    if(access(path, F_OK) != 0) {
+        LOG(INFO, 0, "No todo file in this directory. Create one by adding a todo!");
+        return 0;
+    }
+
     FILE *fp = fopen(path, "r");
     if(fp == NULL) {
         LOG(ERROR, EXIT_FAILURE, "Failed to open .todos file");
@@ -107,11 +127,12 @@ int edit(Arguments *args) {
     
     char data[MAX_LINES][LINE_SIZE];
     int index = 0;
+    bool modified = false;
     while(fgets(data[index], LINE_SIZE, fp)) {
-        if(!strncmp(data[index], args->itemid, strlen(args->itemid))) {
+        if(strncmp(data[index], args->itemid, strlen(args->itemid)) == 0) {
             char *new_data = malloc(LINE_SIZE * sizeof(char *));
             char id[ID_SIZE + 3];
-            sprintf(id, "%d - ", get_next_id());
+            sprintf(id, "%d - ", index);
             strcat(new_data, id);
             for(int i = 0; i < args->num_items; i++) {
                 for(int j = 0; j < args->item_length; j++) {
@@ -122,6 +143,7 @@ int edit(Arguments *args) {
             }
             strcpy(data[index], new_data);
             free(new_data);
+            modified = false;
         }
         index++;
     }
@@ -132,5 +154,11 @@ int edit(Arguments *args) {
         fprintf(fp, "%s", data[i]);
     fclose(fp);
     
+    if(!modified) {
+        char temp[LINE_SIZE];
+        sprintf(temp, "Did not find item with ID %s", args->itemid);
+        LOG(INFO, 0, temp);
+    }
+
     return 0;
 }
